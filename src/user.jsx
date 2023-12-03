@@ -12,32 +12,6 @@ const User = () => {
   const [loading, setLoading] = useState(false);
 
   const retrievedData = JSON.parse(localStorage.getItem("myStateData"));
-
-  // const fetchUserInfo = async (id, accessToken) => {
-  //   try {
-  //     // Set loading to true before making the API call
-  //     setLoading(true);
-  //     const response = await axios.get(
-  //       `https://api.siratinstitute.com/v1/users/${id}`,
-  //       {
-  //         headers: { Authorization: `Bearer ${accessToken}` },
-  //       }
-  //     );
-
-  //     // Set the user name
-  //     setUserName(response.data.name);
-  //   } catch (error) {
-  //     if (error.response.data.code === 401) {
-  //       // Call the upToDateToken function for token refresh
-  //       upToDateToken();
-  //     } else {
-  //       console.error("API Error:", error);
-  //     }
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
   useEffect(() => {
     const fetchData = async () => {
       try {
