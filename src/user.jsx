@@ -6,34 +6,29 @@ import { useEffect, useState } from "react";
 import FetchUserInfo from "./FecthUserInfo";
 
 const User = () => {
-  const { userId, accessToken, upToDateToken } = useContext(Authcontext);
+  const { userId, accessToken,upToDateToken} = useContext(Authcontext);
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [loading, setLoading] = useState(false);
 
   const retrievedData = JSON.parse(localStorage.getItem("myStateData"));
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const response = await FetchUserInfo(userId, accessToken);
-        console.log(response);
-        setUserName(response.data.name);
-      } catch (error) {
-        if (error.response && error.response.status === 401) {
-          // Call the upToDateToken function for token refresh
-          await upToDateToken();
-          // Retry the API call after token refresh
-        } else {
-          console.error("API Error:", error);
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
 
-    // Call the fetchData function
-    fetchData();
+  useEffect(() => {
+    const fetchUserInfo=async(id,accessToken,upToDateToken)=>{
+      try{
+        setLoading(true);
+
+    const url = `https://api.siratinstitute.com/v1/users/${id}`;
+    const response = await FetchUserInfo(url,accessToken,upToDateToken);
+    setUserName(response.data.name)
+    }catch (error){
+    console.log(`User error: ${error}`);
+    }
+      setLoading(false);
+    }
+    
+    
+    fetchUserInfo(userId,accessToken,upToDateToken);
     // eslint-disable-next-line
   }, [accessToken]);
 
